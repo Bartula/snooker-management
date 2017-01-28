@@ -25,4 +25,15 @@ public class AdminPanel {
         } else
             throw new InvalidRequestException("player already exist");
     }
+
+    @Transactional
+    public void removePlayer(Long playerId) {
+        if (playerId == null)
+            throw new InvalidRequestException(("Player id can not be null"));
+        Player player = playerRepository.findById(playerId);
+        if (player == null)
+            throw new InvalidRequestException("Wrong Id. Such player does not exist");
+        playerRepository.removePlayer(player);
+
+    }
 }

@@ -8,4 +8,8 @@ public interface PlayerRepository {
     Player load(String playerFirstName, String playerLastName, String playerCountry);
 
     void save(Player player);
+
+    void removePlayer(Player player);
+
+    Player findById(Long playerId);
 }
