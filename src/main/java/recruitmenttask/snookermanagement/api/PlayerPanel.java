@@ -7,11 +7,11 @@ import recruitmenttask.snookermanagement.domain.PlayerRepository;
 
 
 @Service
-public class AdminPanel {
+public class PlayerPanel {
 
     private PlayerRepository playerRepository;
 
-    public AdminPanel(PlayerRepository playerRepository) {
+    public PlayerPanel(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
     }
 

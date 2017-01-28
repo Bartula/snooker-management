@@ -16,7 +16,7 @@ public class Game {
     private Long playerAId;
     private Long playerBId;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Frame> frames;
     @ManyToOne(cascade = CascadeType.ALL)
     private Tournament tournament;
@@ -48,5 +48,9 @@ public class Game {
 
     public Tournament getTournament() {
         return tournament;
+    }
+
+    public void setFrames(Set<Frame> frames) {
+        this.frames = frames;
     }
 }

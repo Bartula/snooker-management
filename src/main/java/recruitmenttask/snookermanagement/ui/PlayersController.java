@@ -1,7 +1,7 @@
 package recruitmenttask.snookermanagement.ui;
 
 import org.springframework.web.bind.annotation.*;
-import recruitmenttask.snookermanagement.api.AdminPanel;
+import recruitmenttask.snookermanagement.api.PlayerPanel;
 import recruitmenttask.snookermanagement.api.CreatePlayerRequest;
 import recruitmenttask.snookermanagement.api.ListAllPlayersResponse;
 import recruitmenttask.snookermanagement.api.PlayersCatalog;
@@ -11,17 +11,17 @@ import recruitmenttask.snookermanagement.api.PlayersCatalog;
 @RequestMapping("/player")
 public class PlayersController {
 
-    private AdminPanel adminPanel;
+    private PlayerPanel playerPanel;
     private PlayersCatalog playersCatalog;
 
-    public PlayersController(AdminPanel adminPanel, PlayersCatalog playersCatalog) {
-        this.adminPanel = adminPanel;
+    public PlayersController(PlayerPanel playerPanel, PlayersCatalog playersCatalog) {
+        this.playerPanel = playerPanel;
         this.playersCatalog = playersCatalog;
     }
 
     @PutMapping
     public void createNewPlayer(@RequestBody CreatePlayerRequest request){
-        adminPanel.createNewPlayer(request);
+        playerPanel.createNewPlayer(request);
     }
 
     @GetMapping
@@ -31,6 +31,6 @@ public class PlayersController {
 
     @DeleteMapping("/{playerId}")
     public void removePlayer(@PathVariable Long playerId){
-        adminPanel.removePlayer(playerId);
+        playerPanel.removePlayer(playerId);
     }
 }

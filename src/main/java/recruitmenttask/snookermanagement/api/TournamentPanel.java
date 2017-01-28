@@ -2,12 +2,10 @@ package recruitmenttask.snookermanagement.api;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import recruitmenttask.snookermanagement.domain.Player;
-import recruitmenttask.snookermanagement.domain.PlayerRepository;
-import recruitmenttask.snookermanagement.domain.Tournament;
-import recruitmenttask.snookermanagement.domain.TournamentRepository;
+import recruitmenttask.snookermanagement.domain.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -31,8 +29,6 @@ public class TournamentPanel {
             tournamentRepository.save(tournament);
         } else
             throw new InvalidRequestException("Tournament already exist");
-
-
     }
 
     @Transactional
@@ -40,11 +36,8 @@ public class TournamentPanel {
         if (tournamentId == null || playerId == null)
             throw new InvalidRequestException("Tournament Id or player Id can not be null");
         Tournament tournament = tournamentRepository.findById(tournamentId);
-        if (tournament == null)
-            throw new InvalidRequestException("Wrong tournament id.");
-        Player player = playerRepository.findById(playerId);
-        if (player == null)
-            throw new InvalidRequestException("Wrong player id.");
+        checkNullTournament(tournament);
+        Player player = getPlayerFromDB(playerId);
         Set<Player> players = tournament.getPlayers();
         if (players == null){
             players = new HashSet<>();
@@ -57,6 +50,42 @@ public class TournamentPanel {
 
     @Transactional
     public void createNewGame(Long tournamentId, CreateGameRequest request) {
-
+        Tournament tournament = tournamentRepository.findById(tournamentId);
+        checkNullTournament(tournament);
+        Player playerA = getPlayerFromDB(request.getGamePlayerAId());
+        checkIfPlayerIsInTournamentPlayersSet(tournament,playerA);
+        Player playerB = getPlayerFromDB(request.getGamePlayerBId());
+        checkIfPlayerIsInTournamentPlayersSet(tournament,playerB);
+        Game game = new Game(tournament,playerA.getId(),playerB.getId());
+        Set<Game> games = tournament.getGames();
+        if (games == null){
+            games = new HashSet<>();
+            games.add(game);
+            tournament.setGames(games);
+        }else {
+            games.add(game);
+        }
     }
+
+    private Player getPlayerFromDB(Long playerId) {
+        Player player = playerRepository.findById(playerId);
+        if (player == null)
+            throw new InvalidRequestException("Wrong player id.");
+        return player;
+    }
+
+    private void checkNullTournament(Tournament tournament) {
+        if (tournament == null)
+            throw new InvalidRequestException("Wrong tournament id.");
+    }
+
+    private void checkIfPlayerIsInTournamentPlayersSet(Tournament tournament, Player player){
+        Set<Player> players = tournament.getPlayers();
+        if (players == null)
+            throw new InvalidRequestException("Tournament does not have any players");
+        if(!players.contains(player))
+            throw new InvalidRequestException("Player does not belong to the tournament");
+    }
+
+
 }

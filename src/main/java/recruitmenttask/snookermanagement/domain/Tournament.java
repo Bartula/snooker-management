@@ -18,6 +18,8 @@ public class Tournament {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Player> players;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Game> games;
 
     public Tournament() {
     }
@@ -45,5 +47,13 @@ public class Tournament {
 
     public void setPlayers(Set<Player> players) {
         this.players = players;
+    }
+
+    public Set<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(Set<Game> games) {
+        this.games = games;
     }
 }

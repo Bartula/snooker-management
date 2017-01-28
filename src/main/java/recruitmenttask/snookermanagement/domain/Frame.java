@@ -12,8 +12,8 @@ public class Frame {
     @GeneratedValue
     private Long id;
 
-    private Short playerAScore;
-    private Short playerBScore;
+    private Long playerAScore;
+    private Long playerBScore;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Game game;
@@ -21,7 +21,7 @@ public class Frame {
     public Frame() {
     }
 
-    public Frame(Game game, Short playerAScore, Short playerBScore) {
+    public Frame(Game game, Long playerAScore, Long playerBScore) {
         this.game = game;
         this.playerAScore = playerAScore;
         this.playerBScore = playerBScore;
@@ -31,11 +31,11 @@ public class Frame {
         return id;
     }
 
-    public Short getPlayerAScore() {
+    public Long getPlayerAScore() {
         return playerAScore;
     }
 
-    public Short getPlayerBScore() {
+    public Long getPlayerBScore() {
         return playerBScore;
     }
 

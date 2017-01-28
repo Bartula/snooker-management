@@ -9,6 +9,9 @@ public class GameDTO {
     private Long playerAId;
     private Long playerBId;
 
+    public GameDTO() {
+    }
+
     public GameDTO(Long id, Long playerAId, Long playerBId) {
         this.id = id;
         this.playerAId = playerAId;
